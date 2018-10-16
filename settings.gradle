@@ -1,0 +1,8 @@
+rootProject.name = 'streamtools'
+
+
+include 'enhance'
+include 'jsonstream'
+
+
+
