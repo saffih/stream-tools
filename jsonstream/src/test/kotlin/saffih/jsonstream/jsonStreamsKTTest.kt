@@ -28,7 +28,9 @@ import org.junit.Assert
 import org.testng.Assert.assertTrue
 import org.testng.annotations.Test
 import saffih.streamtools.KJsonStreamParser
+import saffih.streamtools.onConsume
 import java.io.*
+import kotlin.streams.asSequence
 import kotlin.streams.toList
 
 
@@ -95,12 +97,21 @@ class JsonStreamKTTest {
         val typeReference = object : TypeReference<FooBarBaz>() {}
         val callback = { e: Exception? -> if (e != null) throw  RuntimeException("Failed", e) }
         val result = parseState.parseObject(typeReference, "tostream", callback)
-        val lst = result.toList()
-        Assert.assertEquals(lst.size, 100)
-        parseState.parseRest(callback)
+                .onConsume({ parseState.parseRest(callback) })
+        val streamIt = result.asSequence().iterator()
         Assert.assertEquals(parseState.fields["beforeStr"].toString(), "\"str\"")
         Assert.assertEquals(parseState.fields["beforeInt"].toString(), "-7")
+        Assert.assertFalse(parseState.fields.containsKey("afterInt"))
+        var cnt = 0
+        streamIt.forEach {
+            cnt++
+            print("read $it")
+            Assert.assertFalse(parseState.fields.containsKey("afterInt"))
+        }
+        Assert.assertTrue(parseState.fields.containsKey("afterInt"))
+        Assert.assertEquals(cnt, 100)
         Assert.assertEquals(parseState.fields["afterStr"].toString(), "\"str\"")
         Assert.assertEquals(parseState.fields["afterInt"].toString(), "7")
     }
+
 }

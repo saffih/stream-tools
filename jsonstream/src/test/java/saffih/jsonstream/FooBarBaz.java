@@ -87,5 +87,13 @@ public class FooBarBaz {
         this.additionalProperties.put(name, value);
     }
 
-
+    @Override
+    public String toString() {
+        return "FooBarBaz{" +
+                "foo='" + foo + '\'' +
+                ", bar=" + bar +
+                ", baz=" + baz +
+                ", additionalProperties=" + additionalProperties +
+                '}';
+    }
 }
