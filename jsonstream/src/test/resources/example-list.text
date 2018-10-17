@@ -1,0 +1,9 @@
+// https://www.json-generator.com/
+[
+  '{{repeat(100, 100)}}',
+  {
+    "foo": "{{guid()}}",
+    "bar": "{{integer(1,1000)}}",
+    "baz": "{{bool()}}"
+  }
+]

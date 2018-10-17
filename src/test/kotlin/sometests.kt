@@ -1,8 +1,3 @@
-plugins {
-    id 'java'
-    id 'org.jetbrains.kotlin.jvm'
-}
-
 /*
  * Copyright (c) 2018. Saffi Hartal.
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,47 +19,25 @@ plugins {
  * SOFTWARE.
  */
 
-//group 'saffih'
-//version '1.0-SNAPSHOT'
+package saffih.jsonstream
 
-sourceCompatibility = 1.8
+import org.testng.Assert.assertNotNull
+import org.testng.annotations.Test
 
-//repositories {
-//    mavenCentral()
-//}
+@Test(groups = ["failed"])
+class KTfailedTestFail {
+    fun wouldFail() {
 
-dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
-    testImplementation group: 'junit', name: 'junit', version: '4.12'
-//     https://mvnrepository.com/artifact/org.testng/testng
-    testImplementation "org.testng:testng:5.+"
-}
-
-compileKotlin {
-    kotlinOptions.jvmTarget = sourceCompatibility
-}
-compileTestKotlin {
-    kotlinOptions.jvmTarget = "1.8"
-}
-
-sourceSets {
-    main {
-        java {
-            srcDir 'main'
-        }
-        resources {
-            srcDir 'main'
-        }
+        assertNotNull(null)
     }
 
-    test {
-        java {
-            srcDir 'test'
-        }
-        resources {
-            srcDir 'test'
-        }
-    }
 }
 
+@Test(groups = ["smoke"])
+class KTpassTheSmokeTest {
 
+    @Test
+    fun passTest() {
+        println("we pass - hello world.")
+    }
+}

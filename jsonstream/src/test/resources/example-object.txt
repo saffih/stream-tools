@@ -1,0 +1,21 @@
+// https://www.json-generator.com/
+{
+  "beforeStr": "str",
+  "beforeInt": -7,
+  "beforeObj": {
+    "name": "beforeObj"
+  },
+  "tostream": [
+    '{{repeat(100, 100)}}',
+    {
+      "foo": "{{guid()}}",
+      "bar": "{{integer(1,1000)}}",
+      "baz": "{{bool()}}"
+    }
+  ],
+  "afterStr": "str",
+  "afterInt": 7,
+  "afterObj": {
+    "name": "afterObj"
+  }
+}

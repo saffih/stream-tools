@@ -1,8 +1,3 @@
-plugins {
-    id 'java'
-    id 'org.jetbrains.kotlin.jvm'
-}
-
 /*
  * Copyright (c) 2018. Saffi Hartal.
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,47 +19,35 @@ plugins {
  * SOFTWARE.
  */
 
-//group 'saffih'
-//version '1.0-SNAPSHOT'
+package saffih.jsonstream;
 
-sourceCompatibility = 1.8
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.Assert;
+import org.testng.annotations.Test;
 
-//repositories {
-//    mavenCentral()
-//}
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 
-dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
-    testImplementation group: 'junit', name: 'junit', version: '4.12'
-//     https://mvnrepository.com/artifact/org.testng/testng
-    testImplementation "org.testng:testng:5.+"
-}
+import static org.testng.Assert.assertTrue;
 
-compileKotlin {
-    kotlinOptions.jvmTarget = sourceCompatibility
-}
-compileTestKotlin {
-    kotlinOptions.jvmTarget = "1.8"
-}
 
-sourceSets {
-    main {
-        java {
-            srcDir 'main'
-        }
-        resources {
-            srcDir 'main'
-        }
-    }
+@Test(groups = "smoke")
+public class JsonStreamTest {
+    private ClassLoader classLoader = ClassLoader.getSystemClassLoader();
+    private String fileName = "example-list.json";
 
-    test {
-        java {
-            srcDir 'test'
-        }
-        resources {
-            srcDir 'test'
-        }
+
+    @Test
+    public void readResource() throws IOException {
+        File file = new File(classLoader.getResource(fileName).getFile());
+        assertTrue(file.exists());
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        JsonNode rootNode = objectMapper.readTree(new FileReader(file));
+        Assert.assertTrue(rootNode.isArray());
+        Assert.assertEquals(rootNode.size(), 100);
     }
 }
-
-
